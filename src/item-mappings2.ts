@@ -13,6 +13,31 @@ function getCommunityItemType(itemClass: number) {
     return '';
 }
 
+function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
+    let clusterUrl = `${pointsShopUrl}/cluster/`;
+    switch(itemClass) {
+        case 15: return `${clusterUrl}2`;
+        case 14: return `${clusterUrl}3`;
+        case 13: return `${clusterUrl}4`;
+        case 11: return `${clusterUrl}6`;
+        case 3: return `${clusterUrl}5`;
+        case 4: return `${clusterUrl}7`;
+    }
+    return clusterUrl;
+}
+
+function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: number) {
+    switch(itemClass) {
+        case 15:
+        case 14:
+        case 13:
+        case 11:
+        case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
+        case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
+    }
+    return '';
+}
+
 const AxiosInstance = axios.create();
 
 readFile('docs/data.json', function(err, data) {
@@ -40,14 +65,16 @@ readFile('docs/data.json', function(err, data) {
                   itemMapping[`${item.appid}`] = {
                       'name': downloadData['app'][`${item.appid}`]['name'],
                       'items': [],
-                      'pointsShop': downloadData['app'][`${item.appid}`]['pointsShop'],
+                      'pointsShopUrl': downloadData['app'][`${item.appid}`]['pointsShop'],
                   };
               }
               // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
               itemMapping[`${item.appid}`]['items'].push({
                       'name': item.community_item_data.item_title,
                       'itemType': getCommunityItemType(item.community_item_class),
-                      'cost': item.point_cost
+                      'cost': item.point_cost,
+                      'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
+                      'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
               });
           });
       });
