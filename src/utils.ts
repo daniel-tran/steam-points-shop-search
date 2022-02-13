@@ -5,9 +5,10 @@ import { writeFile } from 'fs';
  *
  * @param {Object} responseData: Page data containing a list of apps and their ID numbers.
  * @param {string} urlPrefix: The base Steam API URL to query for app data.
+ * @param {number} urlLimit: The max. number of apps to fit into one Steam API URL. In general, try to keep this below 440.
  * @returns {Object} An object containing general info about each app, and the Steam API URL's to query.
  */
-export function getConfigData(responseData: any, urlPrefix: string) {
+export function getConfigData(responseData: any, urlPrefix: string, urlLimit: number) {
     const parsedData = cheerio.load(responseData);
     parsedData.html();
     const options = parsedData('select option');
@@ -16,7 +17,6 @@ export function getConfigData(responseData: any, urlPrefix: string) {
         app: {},
         urls: [urlPrefix]
     };
-    const urlLimit = 400;
     let urlCounter = 0;
     let urlIndex = 0;
     // Extract all app id's with potential Points Shop items
@@ -35,8 +35,6 @@ export function getConfigData(responseData: any, urlPrefix: string) {
             output['urls'][urlIndex] = urlPrefix;
             urlCounter = 0;
             console.log(`Processed a full set of ${urlLimit} items.`);
-            // TODOE Remove this to process more data sets
-            break;
         }
       }
     }
@@ -58,10 +56,7 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
     let promises = [];
     for (let i = 0; i < config['urls'].length; i++) {
         promises.push(axiosInstance.get(config['urls'][i]).catch(console.error));
-        
         console.log(`${promises.length} promise(s) are queued.`);
-        // TODOE Remove this to process more than a subset of the URLs
-        if (i >= 1) {break;}
     }
     
     let itemMapping = {};

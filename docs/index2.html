@@ -25,7 +25,8 @@
                 for (let i = 0; i < APPDATA[key].items.length; i++) {
                     let searchName = "";
                     if (searchMode == 1) {
-                        searchName = APPDATA[key].items[i].name;
+                        // For some reason, some items don't have names but are still valid to purchase from the Points Shop
+                        searchName = APPDATA[key].items[i].name ?? "";
                     } else if (searchMode == 2) {
                         searchName = APPDATA[key].name;
                     }
