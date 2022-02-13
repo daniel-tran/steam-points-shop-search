@@ -4,7 +4,7 @@
   "description": "Implementing a makeshift search function for the Steam Points Shop",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node src/item-mappings2.ts && ts-node src/export-item-mappings.ts",
+    "start": "ts-node src/generate-search-data.ts",
     "download": "ts-node src/download2.ts",
     "test": "npm run test"
   },
