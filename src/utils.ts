@@ -63,6 +63,11 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
     Promise.all(promises).then(function(results) {
         results.forEach(function(response){
             let endpointData = response.data.response;
+
+            if (endpointData.total_count > endpointData.count) {
+                console.log(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items.`);
+            }
+
             endpointData.definitions.forEach(function(item) {
                 // Initial item mapping setup when adding items to this app for the first time
                 if (!itemMapping[`${item.appid}`]) {
@@ -74,7 +79,7 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
                 }
                 // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
                 itemMapping[`${item.appid}`]['items'].push({
-                    'name': item.community_item_data.item_title,
+                    'name': item.community_item_data.item_name, // This is more consistent than item_title, especially when for Item Bundles
                     'itemType': getCommunityItemType(item.community_item_class),
                     'cost': item.point_cost,
                     'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
@@ -101,6 +106,7 @@ function getCommunityItemType(itemClass: number) {
         case 11: return 'Animated Sticker';
         case 3: return 'Profile Background';
         case 4: return 'Emoticon';
+        case 0: return 'Item Bundle';
     }
     return '';
 }
@@ -117,6 +123,7 @@ function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
         case 11: return `${clusterUrl}6`;
         case 3: return `${clusterUrl}5`;
         case 4: return `${clusterUrl}7`;
+        case 0: return `${clusterUrl}0`;
     }
     return clusterUrl;
 }
@@ -129,6 +136,7 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
         case 11:
         case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
         case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
+        case 0: return ''; // Item bundles reuse an existing image, which is not provided through the Steam API
     }
     return '';
 }
