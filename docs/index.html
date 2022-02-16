@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<title>Steam Points Shop Search</title>
+    <style>
+        #searchResultsTable {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <script type="text/javascript" src="data.js"></script>
+    <script>
+        function getSearchMode() {
+            if (document.getElementById("searchModeItems").checked) {
+                return 1;
+            } else if (document.getElementById("searchModeApps").checked) {
+                return 2;
+            }
+            return 0;
+        }
+
+        function getSearchResults(searchText, searchMode) {
+            let result = [];
+            Object.keys(APPDATA).forEach(function(key) {
+                for (let i = 0; i < APPDATA[key].items.length; i++) {
+                    let searchName = "";
+                    if (searchMode == 1) {
+                        // For some reason, some items don't have names but are still valid to purchase from the Points Shop
+                        searchName = APPDATA[key].items[i].name ?? "";
+                    } else if (searchMode == 2) {
+                        searchName = APPDATA[key].name;
+                    }
+
+                    if (searchName.toLowerCase().indexOf(searchText.toLowerCase()) >= 0) {
+                        result.push({
+                            "appName": APPDATA[key].name,
+                            "itemName": APPDATA[key].items[i].name,
+                            "itemType": APPDATA[key].items[i].itemType,
+                            "itemCost": APPDATA[key].items[i].cost,
+                            "pointsShopUrlApp": APPDATA[key].pointsShopUrl,
+                            "pointsShopUrlCluster": APPDATA[key].items[i].pointsShopUrl,
+                            "imageUrl": APPDATA[key].items[i].imageUrl
+                        });
+                    }
+                }
+            });
+            return result;
+        }
+    
+        function searchForItem(item) {
+            let results = getSearchResults(item, getSearchMode());
+            for (let row = document.getElementById("searchResultsTable").rows.length - 1; row > 0; row--) {
+                document.getElementById("searchResultsTable").rows[row].remove();
+            }
+            for (let r = 0; r < results.length; r++) {
+                let row = document.getElementById("searchResultsTable").insertRow(r + 1);
+                let imageSize = {
+                    height: 100,
+                    width: results[r].itemType == 'Profile Background' ? 160 : 100
+                };
+                for (let c = 0; c < Object.keys(results[r]).length - 1; c++) {
+                    let cell = row.insertCell(c);
+                    switch(c) {
+                        case 0: cell.innerHTML = `<a href="${results[r].pointsShopUrlApp}" target="_blank">${results[r].appName}</a>`; break;
+                        case 1: cell.innerHTML = `<a href="${results[r].imageUrl.length > 0 ? results[r].imageUrl : results[r].pointsShopUrlApp}" target="_blank">View "${results[r].itemName}"</a>`; break;
+                        case 2: cell.innerText = results[r].itemName; break;
+                        case 3: cell.innerText = results[r].itemType; break;
+                        case 4: cell.innerText = results[r].itemCost > 0 ? results[r].itemCost : "???"; break;
+                        case 5: cell.innerHTML = `<a href="${results[r].pointsShopUrlCluster}" target="_blank">${results[r].pointsShopUrlCluster}</a>`; break;
+                        default: cell.innerText = "";
+                    }
+                }
+            }
+            document.getElementById("searchResultsTable").style.display = "block";
+        }
+    </script>
+</head>
+<body>
+    <div class="columns">
+        <div class="column is-one-quarter"></div>
+        <div class="column is-half">
+            <div class="columns mt-2">
+                <div class="column is-four-fifths">
+                    <input type="text" id="searchInput" class="input is-rounded" placeholder="e.g. Fortress"/>
+                </div>
+                <div class="column is-one-fifth">
+                    <button type="button" onclick="searchForItem(document.getElementById('searchInput').value)" class="button is-primary is-rounded">Search</button>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-one-quarter"></div>
+                <div class="column is-one-quarter">
+                    <input type="radio" id="searchModeItems" name="searchMode" value="item" checked>
+                    <label for="searchModeItems">Search Items</label>
+                </div>
+                <div class="column is-one-quarter">
+                    <input type="radio" id="searchModeApps" name="searchMode" value="app">
+                    <label for="searchModeApps">Search Games</label>
+                </div>
+                <div class="column is-one-quarter"></div>
+            </div>
+        </div>
+        <div class="column is-one-quarter"></div>
+    </div>
+    <div class="columns">
+        <div class="column is-one-fifth"></div>
+        <div class="column is-three-fifths">
+            <table id="searchResultsTable" class="table">
+              <tr>
+                <th>Game</th>
+                <th>Image (unanimated)</th>
+                <th>Item Name</th>
+                <th>Item Type</th>
+                <th>Cost</th>
+                <th>Points Shop URL</th>
+              </tr>
+            </table>
+        </div>
+        <div class="column is-one-fifth"></div>
+    </div>
+</body>
+</html>
