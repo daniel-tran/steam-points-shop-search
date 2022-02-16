@@ -4,7 +4,8 @@
     <meta charset="utf-8">
 	<title>Steam Points Shop Search</title>
     <style>
-        #searchResultsTable {
+        #searchResultsTable,
+        #searchValidationError {
             display: none;
         }
     </style>
@@ -49,6 +50,11 @@
         }
     
         function searchForItem(item) {
+            if (!item || item.trim().length < 2 || item.trim().length > 255) {
+                document.getElementById("searchValidationError").style.display = "block";
+                return;
+            }
+
             let results = getSearchResults(item, getSearchMode());
             for (let row = document.getElementById("searchResultsTable").rows.length - 1; row > 0; row--) {
                 document.getElementById("searchResultsTable").rows[row].remove();
@@ -73,6 +79,7 @@
                 }
             }
             document.getElementById("searchResultsTable").style.display = "block";
+            document.getElementById("searchValidationError").style.display = "none";
         }
     </script>
 </head>
@@ -82,12 +89,13 @@
         <div class="column is-half">
             <div class="columns mt-2">
                 <div class="column is-four-fifths">
-                    <input type="text" id="searchInput" class="input is-rounded" placeholder="e.g. Fortress"/>
+                    <input type="text" id="searchInput" class="input is-rounded" placeholder="e.g. Fortress" maxlength="255"/>
                 </div>
                 <div class="column is-one-fifth">
                     <button type="button" onclick="searchForItem(document.getElementById('searchInput').value)" class="button is-primary is-rounded">Search</button>
                 </div>
             </div>
+            <p id="searchValidationError" class="field help is-danger">Search text cannot be empty and must contain at least two non-whitespace characters. Search text cannot exceed 255 characters.</p>
             <div class="columns">
                 <div class="column is-one-quarter"></div>
                 <div class="column is-one-quarter">
