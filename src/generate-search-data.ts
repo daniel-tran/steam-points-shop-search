@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { writeFile } from 'fs';
 import { getConfigData, processConfigData } from './utils';
 
 const AxiosInstance = axios.create(); 
@@ -11,6 +12,29 @@ AxiosInstance.get('https://www.steamcardexchange.net/index.php?backgroundviewer'
     }
   ).then(
     response => {
-        processConfigData(AxiosInstance, response, 'docs/data.js');
+        writeFile('debug/config.json', JSON.stringify(response), err => {
+            if (err) {
+                console.warn(err);
+            }
+        });
+        return processConfigData(AxiosInstance, response);
+    }
+  ).then(
+    response => {
+        writeFile('debug/output.json', JSON.stringify(response), err => {
+            if (err) {
+                console.warn(err);
+            } else {
+                console.log('Success! Got data from the Steam API.');
+            }
+        });
+
+        let exportedData = `var APPDATA = ${JSON.stringify(response)};`
+        writeFile('docs/data.js', exportedData, err => {
+            if (err) {
+                console.error(err);
+                return;
+            }
+        });
     }
   ).catch(console.error); // Error handling

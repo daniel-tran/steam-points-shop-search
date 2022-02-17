@@ -1,5 +1,4 @@
 import * as cheerio from 'cheerio';
-import { writeFile } from 'fs';
 
 /** Generates configuration information to get Points Shop information from the Steam API.
  *
@@ -25,7 +24,7 @@ export function getConfigData(responseData: any, urlPrefix: string, urlLimit: nu
       if (appid.length > 0) {
         output['app'][`${appid}`] = {
             'name': options.eq(i).text(),
-            'pointsShop': `https://store.steampowered.com/points/shop/app/${appid}`
+            'pointsShopUrl': `https://store.steampowered.com/points/shop/app/${appid}`
         };
         
         output['urls'][urlIndex] += `&appids[${urlCounter}]=${appid}`;
@@ -46,13 +45,13 @@ export function getConfigData(responseData: any, urlPrefix: string, urlLimit: nu
     return output;
 }
 
-/** Writes the result of a given configuration to a file.
+/** Returns the Steam API extraction result from a given configuration.
  *
  * @param {Object} axiosInstance: An Axios instance used to make web requests.
  * @param {Object} config: A configuration that was returned from `getConfigData()`.
- * @param {string} exportedDataPath: The file to write the results to.
+ * @returns {Promise} A promise which returns an object containing Steam API data pertaining to the queried apps.
  */
-export function processConfigData(axiosInstance: any, config: any, exportedDataPath: string) {
+export function processConfigData(axiosInstance: any, config: any) {
     let promises = [];
     for (let i = 0; i < config['urls'].length; i++) {
         promises.push(axiosInstance.get(config['urls'][i]).catch(console.error));
@@ -60,12 +59,12 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
     }
     
     let itemMapping = {};
-    Promise.all(promises).then(function(results) {
+    return Promise.all(promises).then(function(results) {
         results.forEach(function(response){
             let endpointData = response.data.response;
 
             if (endpointData.total_count > endpointData.count) {
-                console.log(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items.`);
+                console.warn(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items.`);
             }
 
             endpointData.definitions.forEach(function(item) {
@@ -74,7 +73,7 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
                     itemMapping[`${item.appid}`] = {
                         'name': config['app'][`${item.appid}`]['name'],
                         'items': [],
-                        'pointsShopUrl': config['app'][`${item.appid}`]['pointsShop'],
+                        'pointsShopUrl': config['app'][`${item.appid}`]['pointsShopUrl'],
                     };
                 }
                 // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
@@ -87,14 +86,8 @@ export function processConfigData(axiosInstance: any, config: any, exportedDataP
                 });
             });
         });
-    }).then(function() {        
-        let exportedData = `var APPDATA = ${JSON.stringify(itemMapping)};`
-        writeFile(exportedDataPath, exportedData, otherErr => {
-            if (otherErr) {
-                console.error(otherErr);
-                return;
-            }
-        });
+    }).then(function() {
+        return itemMapping;
     }).catch(console.error); // Error handling
 }
 
