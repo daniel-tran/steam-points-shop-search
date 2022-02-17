@@ -67,24 +67,26 @@ export function processConfigData(axiosInstance: any, config: any) {
                 console.warn(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items.`);
             }
 
-            endpointData.definitions.forEach(function(item) {
-                // Initial item mapping setup when adding items to this app for the first time
-                if (!itemMapping[`${item.appid}`]) {
-                    itemMapping[`${item.appid}`] = {
-                        'name': config['app'][`${item.appid}`]['name'],
-                        'items': [],
-                        'pointsShopUrl': config['app'][`${item.appid}`]['pointsShopUrl'],
-                    };
-                }
-                // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
-                itemMapping[`${item.appid}`]['items'].push({
-                    'name': item.community_item_data.item_name, // This is more consistent than item_title, especially when for Item Bundles
-                    'itemType': getCommunityItemType(item.community_item_class),
-                    'cost': item.point_cost,
-                    'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
-                    'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
+            if (endpointData.definitions) {
+                endpointData.definitions.forEach(function(item) {
+                    // Initial item mapping setup when adding items to this app for the first time
+                    if (!itemMapping[`${item.appid}`]) {
+                        itemMapping[`${item.appid}`] = {
+                            'name': config['app'][`${item.appid}`]['name'],
+                            'items': [],
+                            'pointsShopUrl': config['app'][`${item.appid}`]['pointsShopUrl'],
+                        };
+                    }
+                    // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
+                    itemMapping[`${item.appid}`]['items'].push({
+                        'name': item.community_item_data.item_name, // This is more consistent than item_title, especially when for Item Bundles
+                        'itemType': getCommunityItemType(item.community_item_class),
+                        'cost': item.point_cost,
+                        'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
+                        'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
+                    });
                 });
-            });
+            }
         });
     }).then(function() {
         return itemMapping;
