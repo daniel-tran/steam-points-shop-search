@@ -1,21 +1,21 @@
 {
   "name": "steam-points-shop-search",
   "version": "1.0.0",
-  "description": "Implementing a makeshift search function for the Steam Points Shop",
-  "main": "index.ts",
+  "description": "Makeshift search function for the Steam Points Shop",
+  "main": "src/generate-search-data.ts",
   "scripts": {
     "start": "ts-node src/generate-search-data.ts",
     "test": "jest"
   },
   "keywords": [
-    "steam"
+    "steam",
+    "typescript"
   ],
   "author": "Yes",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.25.0",
-    "cheerio": "^1.0.0-rc.10",
-    "ts-node": "^10.4.0"
+    "cheerio": "^1.0.0-rc.10"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
@@ -23,6 +23,7 @@
     "@types/cheerio": "^0.22.30",
     "jest": "^27.5.1",
     "ts-jest": "^27.1.3",
+    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   }
 }
