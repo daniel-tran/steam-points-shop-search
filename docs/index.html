@@ -22,7 +22,7 @@
             return 0;
         }
 
-        function getSearchResults(searchText, searchMode) {
+        function getSearchResults(searchText, searchMode, sortByProperty) {
             let result = [];
             Object.keys(APPDATA).forEach(function(key) {
                 for (let i = 0; i < APPDATA[key].items.length; i++) {
@@ -47,16 +47,28 @@
                     }
                 }
             });
+            result.sort(function(item1, item2) {
+                // Sort numerically, if the property to sort on can be converted to an integer
+                let item1Value = isNaN(item1[sortByProperty]) ? item1[sortByProperty].toLowerCase() : parseInt(item1[sortByProperty]);
+                let item2Value = isNaN(item2[sortByProperty]) ? item2[sortByProperty].toLowerCase() : parseInt(item2[sortByProperty]);
+
+                if (item1Value > item2Value) {
+                    return 1;
+                } else if (item1Value < item2Value) {
+                    return -1;
+                }
+                return 0;
+            });
             return result;
         }
-    
+
         function searchForItem(item) {
             if (!item || item.trim().length < 2 || item.trim().length > 255) {
                 document.getElementById("searchValidationError").style.display = "block";
                 return;
             }
 
-            let results = getSearchResults(item, getSearchMode());
+            let results = getSearchResults(item, getSearchMode(), document.getElementById("sortMode").value);
             for (let row = document.getElementById("searchResultsTable").rows.length - 1; row > 0; row--) {
                 document.getElementById("searchResultsTable").rows[row].remove();
             }
@@ -98,7 +110,6 @@
             </div>
             <p id="searchValidationError" class="field help is-danger">Search text cannot be empty and must contain at least two non-whitespace characters. Search text cannot exceed 255 characters.</p>
             <div class="columns">
-                <div class="column is-one-quarter"></div>
                 <div class="column is-one-quarter">
                     <input type="radio" id="searchModeItems" name="searchMode" value="item" checked>
                     <label for="searchModeItems">Search Items</label>
@@ -107,7 +118,17 @@
                     <input type="radio" id="searchModeApps" name="searchMode" value="app">
                     <label for="searchModeApps">Search Games</label>
                 </div>
-                <div class="column is-one-quarter"></div>
+                <div class="column is-one-half">
+                    <label for="sortMode">Sort by: </label>
+                    <div class="select is-primary is-rounded is-small">
+                        <select id="sortMode" name="sortMode">
+                            <option value="appName">Game</option>
+                            <option value="itemName">Item Name</option>
+                            <option value="itemType">Item Type</option>
+                            <option value="itemCost">Cost</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="column is-one-quarter"></div>
