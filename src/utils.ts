@@ -102,6 +102,7 @@ function getCommunityItemType(itemClass: number) {
         case 3: return 'Profile Background';
         case 4: return 'Emoticon';
         case 0: return 'Item Bundle';
+        case 8: return 'Special Profile';
     }
     return '';
 }
@@ -119,6 +120,7 @@ function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
         case 3: return `${clusterUrl}5`;
         case 4: return `${clusterUrl}7`;
         case 0: return `${clusterUrl}0`;
+        case 8: return `${clusterUrl}1`;
     }
     return clusterUrl;
 }
@@ -129,6 +131,7 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
         case 14:
         case 13:
         case 11:
+        case 8:
         case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
         case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
         case 0: return ''; // Item bundles reuse an existing image, which is not provided through the Steam API
