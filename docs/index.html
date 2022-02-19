@@ -13,24 +13,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script type="text/javascript" src="data.js"></script>
     <script>
-        function getSearchMode() {
-            if (document.getElementById("searchModeItems").checked) {
-                return 1;
-            } else if (document.getElementById("searchModeApps").checked) {
-                return 2;
-            }
-            return 0;
-        }
-
         function getSearchResults(searchText, searchMode, sortByProperty) {
             let result = [];
             Object.keys(APPDATA).forEach(function(key) {
                 for (let i = 0; i < APPDATA[key].items.length; i++) {
                     let searchName = "";
-                    if (searchMode == 1) {
+                    if (searchMode == "itemName") {
                         // For some reason, some items don't have names but are still valid to purchase from the Points Shop
                         searchName = APPDATA[key].items[i].name ?? "";
-                    } else if (searchMode == 2) {
+                    } else if (searchMode == "appName") {
                         searchName = APPDATA[key].name;
                     }
 
@@ -68,7 +59,7 @@
                 return;
             }
 
-            let results = getSearchResults(item, getSearchMode(), document.getElementById("sortMode").value);
+            let results = getSearchResults(item, document.getElementById("searchMode").value, document.getElementById("sortMode").value);
             for (let row = document.getElementById("searchResultsTable").rows.length - 1; row > 0; row--) {
                 document.getElementById("searchResultsTable").rows[row].remove();
             }
@@ -106,14 +97,15 @@
             <p id="searchValidationError" class="field help is-danger">Search text cannot be empty and must contain at least two non-whitespace characters. Search text cannot exceed 255 characters.</p>
             <div class="columns">
                 <div class="column is-one-quarter">
-                    <input type="radio" id="searchModeItems" name="searchMode" value="item" checked>
-                    <label for="searchModeItems">Search Items</label>
+                    <label for="searchMode">Search by: </label>
+                    <div class="select is-primary is-rounded is-small">
+                        <select id="searchMode" name="searchMode">
+                            <option value="appName">Game</option>
+                            <option value="itemName" selected="selected">Item Name</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="column is-one-quarter">
-                    <input type="radio" id="searchModeApps" name="searchMode" value="app">
-                    <label for="searchModeApps">Search Games</label>
-                </div>
-                <div class="column is-one-half">
                     <label for="sortMode">Sort by: </label>
                     <div class="select is-primary is-rounded is-small">
                         <select id="sortMode" name="sortMode">
