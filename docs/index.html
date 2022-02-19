@@ -98,8 +98,7 @@
 </head>
 <body>
     <div class="columns">
-        <div class="column is-one-quarter"></div>
-        <div class="column is-half">
+        <div class="column is-half is-offset-one-quarter">
             <div class="columns mt-2">
                 <div class="column is-four-fifths">
                     <input type="text" id="searchInput" class="input is-rounded" placeholder="e.g. Fortress" maxlength="255"/>
@@ -131,12 +130,10 @@
                 </div>
             </div>
         </div>
-        <div class="column is-one-quarter"></div>
     </div>
     <div class="columns">
-        <div class="column is-one-fifth"></div>
-        <div class="column is-three-fifths">
-            <table id="searchResultsTable" class="table">
+        <div class="column is-three-fifths is-offset-one-fifth table-container">
+            <table id="searchResultsTable" class="table is-hoverable">
               <tr>
                 <th>Game</th>
                 <th>Image (unanimated)</th>
@@ -147,7 +144,6 @@
               </tr>
             </table>
         </div>
-        <div class="column is-one-fifth"></div>
     </div>
 </body>
 </html>
