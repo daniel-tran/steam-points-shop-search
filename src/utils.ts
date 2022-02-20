@@ -138,3 +138,78 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
     }
     return '';
 }
+
+/** Generates configuration information from the app list data from the Steam API GetAppList v2 endpoint.
+ *
+ * @param {Object[]} appList: A list of objects with the "appid" and "name" properties.
+ * @returns {Object} An object containing general info about each app, and the Steam API URL's to query.
+ */
+export function getConfigDataFromAppList(appList: any) {
+    let output = {
+        app: {}
+    };
+
+    console.log(`Processing ${appList.length} apps.`);
+    for (let i = 0; i < appList.length; i++) {
+        let appid = appList[i].appid;
+        output.app[`${appid}`] = {
+            'name': appList[i].name,
+            'pointsShopUrl': `https://store.steampowered.com/points/shop/app/${appid}`
+        };
+    }
+
+    console.log('Config construction complete.');
+    return output;
+}
+
+/** Returns the Steam API extraction result from a given configuration, accessing paginated data where necessary.
+ *
+ * @param {Object} axiosInstance: An Axios instance used to make web requests.
+ * @param {Object} itemMapping: An object containing the cumulative result of each page of data from the Steam API.
+ * @param {Object} config: A configuration that was returned from `getConfigDataFromAppList()`.
+ * @param {string} baseUrl: The main endpoint URL being queried.
+ * @param {string} cursor: A cursor used to view a specific page of data.
+ * @returns {Promise} A promise which returns an object containing Steam API data.
+ */
+export function processConfigDataRecursive(axiosInstance: any, itemMapping: any, config: any, baseUrl: string, cursor: string) {
+    const url = `${baseUrl}&cursor=${cursor}`;
+    console.log(`Getting data from ${url}`);
+    return Promise.resolve(axiosInstance.get(url))
+                  .then(function(results){
+                      let endpointData = results.data.response;
+
+                      if (endpointData.count <= 0) {
+                          return itemMapping;
+                      }
+
+                      endpointData.definitions.forEach(function(item) {
+                          // App ID did not show up in the list of apps from the Steam API, so use the ID as a fallback name
+                          if (!config['app'][`${item.appid}`]) {
+                              config['app'][`${item.appid}`] = {
+                                  'name': `${item.appid}`,
+                                  'pointsShopUrl': `https://store.steampowered.com/points/shop/app/${item.appid}`
+                              };
+                          }
+
+                          // Initial item mapping setup when adding items to this app for the first time
+                          if (!itemMapping[`${item.appid}`]) {
+                              itemMapping[`${item.appid}`] = {
+                                  'name': config['app'][`${item.appid}`]['name'],
+                                  'items': [],
+                                  'pointsShopUrl': config['app'][`${item.appid}`]['pointsShopUrl'],
+                              };
+                          }
+                          // Add extra info about the app, since this is available from the response and discarding all this hard-earned data would be wasteful
+                          itemMapping[`${item.appid}`]['items'].push({
+                              'name': item.community_item_data.item_name, // This is more consistent than item_title, especially when for Item Bundles
+                              'itemType': getCommunityItemType(item.community_item_class),
+                              'cost': item.point_cost,
+                              'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
+                              'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
+                          });
+                      });
+
+                      return processConfigDataRecursive(axiosInstance, itemMapping, config, baseUrl, encodeURIComponent(endpointData.next_cursor));
+                  })
+                  .catch(console.error); // Error handling
+}

@@ -5,6 +5,7 @@
   "main": "src/generate-search-data.ts",
   "scripts": {
     "start": "ts-node src/generate-search-data.ts",
+    "start-recursive": "ts-node src/generate-search-data-recursive.ts",
     "test": "jest"
   },
   "keywords": [
