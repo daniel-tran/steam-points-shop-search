@@ -5,6 +5,25 @@ Makeshift search function for the Steam Points Shop, localised entirely within y
 
 You can also read the technical notes about how this search functionality has been implemented here: https://github.com/daniel-tran/steam-points-shop-search/wiki
 
+# How to run locally
+
+## Setup
+
+1. Node 16.13.2 or higher
+2. Npm 8.1.2 or higher (should already be included with the standard Node installer)
+
+## Generating search data
+
+After cloning or downloading a copy of this repository:
+
+1. Open a Command Prompt and navigate to the folder containing this code base.
+2. Execute `npm run install` - This install the various module dependencies utilised by the underlying code.
+3. Execute `npm run start` - This starts the process for generating a set of search data. You can expect this to take a couple of minutes to complete, depending on your computer.
+
+_Note that this process has only been tested on Windows._
+
+Afterwards, you can load "index.html" into your browser and start using your freshly generated search data.
+
 # FAQ
 
 ## Why I can't find a particular item?
