@@ -5,9 +5,10 @@ import * as cheerio from 'cheerio';
  * @param {Object} responseData: Page data containing a list of apps and their ID numbers.
  * @param {string} urlPrefix: The base Steam API URL to query for app data.
  * @param {number} urlLimit: The max. number of apps to fit into one Steam API URL. In general, try to keep this below 440.
+ * @param {string} idTextToRemove: Text that is to be removed from the app ID to obtain the its actual value. Defaults to the empty string.
  * @returns {Object} An object containing general info about each app, and the Steam API URL's to query.
  */
-export function getConfigData(responseData: any, urlPrefix: string, urlLimit: number) {
+export function getConfigData(responseData: any, urlPrefix: string, urlLimit: number, idTextToRemove: string = '') {
     const parsedData = cheerio.load(responseData);
     parsedData.html();
     const options = parsedData('select option');
@@ -20,7 +21,7 @@ export function getConfigData(responseData: any, urlPrefix: string, urlLimit: nu
     let urlIndex = 0;
     // Extract all app id's with potential Points Shop items
     for (let i = 0; i < options.length; i++) {
-      let appid = options.eq(i).val();
+      let appid = options.eq(i).val().replace(idTextToRemove, '');
       if (appid.length > 0) {
         output['app'][`${appid}`] = {
             'name': options.eq(i).text(),

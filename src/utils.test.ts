@@ -46,6 +46,17 @@ describe('Utils unit tests', () => {
            expect(config.urls[1]).toEqual('https://api.steampowered.com?count=100&appids[0]=92800');
         });
 
+        test('should remove extra text in app ID if required', () => {
+           const responseData = `
+           <select>
+             <option value='app-1435780'>Farm Frenzy Refreshed</option>
+           </select>
+           `;
+           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, 'app-');
+           const configItem = config.app['1435780'];
+           expect(configItem).toBeDefined();
+        });
+
         test("should handle empty page data", () => {
            const responseData = '';
            const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 1);
