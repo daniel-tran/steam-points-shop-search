@@ -2,7 +2,8 @@ import axios from 'axios';
 import { writeFile } from 'fs';
 import { processConfigDataRecursive, getConfigDataFromAppList } from './utils';
 
-const AxiosInstance = axios.create(); 
+const AxiosInstance = axios.create();
+const jsonIndentation = '    ';
 
 // See the technical notes for why this endpoint is still problematic for obtaining the app list
 AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')
@@ -12,7 +13,7 @@ AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')
     }
   ).then(
     response => {
-        writeFile('debug/config.json', JSON.stringify(response), err => {
+        writeFile('debug/config.json', JSON.stringify(response, null, jsonIndentation), err => {
             if (err) {
                 console.warn(err);
             }
@@ -21,7 +22,7 @@ AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')
     }
   ).then(
     response => {
-        writeFile('debug/output.json', JSON.stringify(response), err => {
+        writeFile('debug/output.json', JSON.stringify(response, null, jsonIndentation), err => {
             if (err) {
                 console.warn(err);
             } else {
@@ -29,7 +30,7 @@ AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')
             }
         });
 
-        let exportedData = `var APPDATA = ${JSON.stringify(response)};`
+        let exportedData = `var APPDATA = ${JSON.stringify(response, null, jsonIndentation)};`
         writeFile('docs/data.js', exportedData, err => {
             if (err) {
                 console.error(err);
