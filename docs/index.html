@@ -11,7 +11,6 @@
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <script type="text/javascript" src="data.js"></script>
     <script>
         function getSearchResults(searchText, searchMode, sortByProperty) {
             let result = [];
@@ -140,5 +139,7 @@
             </table>
         </div>
     </div>
+    <!-- Load the data set last, since it is the largest file and isn't required as part of the page loading proccess -->
+    <script type="text/javascript" src="data.js"></script>
 </body>
 </html>
