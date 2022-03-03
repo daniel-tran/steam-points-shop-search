@@ -81,6 +81,13 @@
             document.getElementById("searchResultsTable").style.display = "block";
             document.getElementById("searchValidationError").style.display = "none";
         }
+
+        function searchForItemUsingEnterKey() {
+            // Less wasteful to obtain the search text only when Enter is pressed, rather than always passing in a parameter which usually gets discarded anyway
+            if (window.event.key == "Enter") {
+                searchForItem(document.getElementById("searchInput").value);
+            }
+        }
     </script>
 </head>
 <body>
@@ -88,7 +95,7 @@
         <div class="column is-half is-offset-one-quarter">
             <div class="columns mt-2">
                 <div class="column is-four-fifths">
-                    <input type="text" id="searchInput" class="input is-rounded" placeholder="Enter search text, then press the Search button" maxlength="255"/>
+                    <input type="text" id="searchInput" class="input is-rounded" placeholder="Enter search text, then press the Search button" maxlength="255" onkeyup="searchForItemUsingEnterKey()"/>
                 </div>
                 <div class="column is-one-fifth">
                     <button type="button" onclick="searchForItem(document.getElementById('searchInput').value)" class="button is-primary is-rounded">Search</button>
