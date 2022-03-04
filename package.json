@@ -19,6 +19,8 @@
     "cheerio": "^1.0.0-rc.10"
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.11.3",
+    "@testing-library/jest-dom": "^5.16.2",
     "@tsconfig/recommended": "^1.0.1",
     "@types/axios": "^0.14.0",
     "@types/cheerio": "^0.22.30",
