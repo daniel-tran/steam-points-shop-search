@@ -42,3 +42,7 @@ For some unknown reason, the Steam API data sets the cost of item bundles to 0, 
 ## What will happen once Steam introduces an official search function for the Points Shop?
 
 If that ever happens, then this repository will mostly likely be archived and cease being hosted via GitHub Pages.
+
+# Disclaimer
+
+This open source project is not endorsed by nor affiliated with Valve or Steam.

@@ -5,6 +5,18 @@
     <title>Steam Points Shop Search</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
     <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0%;
+            width: 100%;
+            height: 2.5rem;
+        }
+
         #searchResultsTable,
         #searchValidationError {
             display: none;
@@ -126,7 +138,8 @@
         </div>
     </div>
     <div class="columns">
-        <div class="column is-three-fifths is-offset-one-fifth table-container">
+        <!-- Bottom padding to ensure the last item isn't hidden behind the footer -->
+        <div class="column is-three-fifths is-offset-one-fifth table-container" style="padding-bottom: 10rem;">
             <table id="searchResultsTable" class="table is-hoverable">
               <tr>
                 <th>Game</th>
@@ -139,6 +152,16 @@
             </table>
         </div>
     </div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                This is an MIT licensed open source project and is not endorsed by nor affiliated with Valve or Steam.
+            </p>
+            <p>
+                All Steam data shown is not always guaranteed to match the information available on the <a href="https://store.steampowered.com/points/shop/" target="_blank">Steam Points Shop</a>.
+            </p>
+        </div>
+    </footer>
     <!-- Load the data set last, since it is the largest file and isn't required as part of the page loading proccess -->
     <script type="text/javascript" src="data.js"></script>
 </body>
