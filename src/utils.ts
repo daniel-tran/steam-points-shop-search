@@ -2,13 +2,13 @@ import * as cheerio from 'cheerio';
 
 /** Generates configuration information to get Points Shop information from the Steam API.
  *
- * @param {Object} responseData: Page data containing a list of apps and their ID numbers.
+ * @param {string} responseData: HTML page data containing a list of apps and their ID numbers.
  * @param {string} urlPrefix: The base Steam API URL to query for app data.
  * @param {number} urlLimit: The max. number of apps to fit into one Steam API URL. In general, try to keep this below 440.
  * @param {string} idTextToRemove: Text that is to be removed from the app ID to obtain the its actual value. Defaults to the empty string.
  * @returns {Object} An object containing general info about each app, and the Steam API URL's to query.
  */
-export function getConfigData(responseData: any, urlPrefix: string, urlLimit: number, idTextToRemove: string = '') {
+export function getConfigData(responseData: string, urlPrefix: string, urlLimit: number, idTextToRemove: string = '') {
     const parsedData = cheerio.load(responseData);
     parsedData.html();
     const options = parsedData('select option');
