@@ -52,9 +52,23 @@ describe('Utils unit tests', () => {
              <option value='app-1435780'>Farm Frenzy Refreshed</option>
            </select>
            `;
-           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, 'app-');
+           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, /\d+/);
            const configItem = config.app['1435780'];
            expect(configItem).toBeDefined();
+        });
+
+        test('should remove duplicate app ID', () => {
+           const responseData = `
+           <select>
+             <option value='app-1435780'>Farm Frenzy Refreshed</option>
+             <option value='app-1435780#goty'>Farm Frenzy Refreshed - Game of the Year Edition</option>
+           </select>
+           `;
+           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, /\d+/);
+           const configItem = config.app['1435780'];
+           expect(configItem).toBeDefined();
+           // Ensure the correct single app was selected, even though both may very well be valid apps
+           expect(configItem.name).toEqual('Farm Frenzy Refreshed');
         });
 
         test("should handle empty page data", () => {

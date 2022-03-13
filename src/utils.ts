@@ -5,10 +5,10 @@ import * as cheerio from 'cheerio';
  * @param {string} responseData: HTML page data containing a list of apps and their ID numbers.
  * @param {string} urlPrefix: The base Steam API URL to query for app data.
  * @param {number} urlLimit: The max. number of apps to fit into one Steam API URL. In general, try to keep this below 440.
- * @param {string} idTextToRemove: Text that is to be removed from the app ID to obtain the its actual value. Defaults to the empty string.
+ * @param {string} idExtractionRegex: Regex that extracts the true app ID from the provided source value (first match only). Defaults to null.
  * @returns {Object} An object containing general info about each app, and the Steam API URL's to query.
  */
-export function getConfigData(responseData: string, urlPrefix: string, urlLimit: number, idTextToRemove: string = '') {
+export function getConfigData(responseData: string, urlPrefix: string, urlLimit: number, idExtractionRegex: RegExp = null) {
     const parsedData = cheerio.load(responseData);
     parsedData.html();
     const options = parsedData('select option');
@@ -21,8 +21,18 @@ export function getConfigData(responseData: string, urlPrefix: string, urlLimit:
     let urlIndex = 0;
     // Extract all app id's with potential Points Shop items
     for (let i = 0; i < options.length; i++) {
-      let appid = options.eq(i).val().replace(idTextToRemove, '');
+      let appid = options.eq(i).val();
       if (appid.length > 0) {
+        // App ID is not empty, but may need to be extracted from a larger string, usually in the form of "index.php?gamepage-appid-..."
+        if (idExtractionRegex) {
+            appid = `${appid}`.match(idExtractionRegex)[0];
+
+            // The regex may result in some apps appearing multiple times, in which case only take the first instance.
+            // This is a somewhat blind approach, but selecting the correct instance is not so trivial either, depending on the expression.
+            if (`${appid}` in output['app']) {
+                continue;
+            }
+        }
         output['app'][`${appid}`] = {
             'name': options.eq(i).text(),
             'pointsShopUrl': `https://store.steampowered.com/points/shop/app/${appid}`

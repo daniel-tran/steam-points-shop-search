@@ -9,7 +9,7 @@ const jsonIndentation = '    ';
 AxiosInstance.get('https://www.steamcardexchange.net/index.php?showcase')
   .then( // Once we have data returned ...
     response => {
-        return getConfigData(response.data, 'https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=1000', 130, 'index.php?gamepage-appid-');
+        return getConfigData(response.data, 'https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=1000', 130, /\d+/);
     }
   ).then(
     response => {
