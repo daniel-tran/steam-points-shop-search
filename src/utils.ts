@@ -104,6 +104,8 @@ function getCommunityItemType(itemClass: number) {
         case 4: return 'Emoticon';
         case 0: return 'Item Bundle';
         case 8: return 'Special Profile';
+        case 16: return 'Steam Deck Keyboard';
+        case 12: return 'Chat Effect';
     }
     return '';
 }
@@ -122,6 +124,8 @@ function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
         case 4: return `${clusterUrl}7`;
         case 0: return `${clusterUrl}0`;
         case 8: return `${clusterUrl}1`;
+        case 16: return `${clusterUrl}8`;
+        case 12: return 'https://store.steampowered.com/points/shop/c/chateffects'; // Chat effects are currently bundled all on the same page
     }
     return clusterUrl;
 }
@@ -133,6 +137,8 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
         case 13:
         case 11:
         case 8:
+        case 16:
+        case 12:
         case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
         case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
         case 0: return ''; // Item bundles reuse an existing image, which is not provided through the Steam API

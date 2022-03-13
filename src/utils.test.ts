@@ -183,6 +183,8 @@ describe('Utils unit tests', () => {
              <option value='440'>Team Fortress 2</option>
              <option value='1263950'>The Debut Collection</option>
              <option value='1846860'>Winter Sale 2021</option>
+             <option value='1675200'>Steam Deck</option>
+             <option value='1195690'>Winter Sale Event 2019</option>
            </select>
            `;
            // Just take a real data sample from the Steam API and add it to the mocked response
@@ -206,6 +208,9 @@ describe('Utils unit tests', () => {
                        {"appid":1263950,"defid":78781,"type":1,"community_item_class":15,"community_item_type":5,"point_cost":"3000","timestamp_created":1600898758,"timestamp_updated":1620665370,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Entering VR","active":true,"community_item_data":{"item_name":"Entering VR","item_title":"Entering VR","item_image_small":"4e0f9df2a984e2208844614afdfb59c8f903b7a6.gif","item_image_large":"31282c57ab27f4bc07aded27f1910f83287059c3.jpg","animated":true},"usable_duration":0,"bundle_discount":0},
                        // Special Profile
                        {"appid":1846860,"defid":150092,"type":1,"community_item_class":8,"community_item_type":13,"point_cost":"5000","timestamp_created":1641234579,"timestamp_updated":1641419301,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Winter 2021","active":true,"community_item_data":{"item_name":"Winter 2021","item_title":"Winter 2021","item_image_small":"ff46ca81f6c9fcb8165bfb2b161bbe364a8d14df.jpg","item_image_large":"32161169b3224ac783dec362027afeff7b7607c2.jpg","animated":false,"profile_theme_id":"Winter2021"},"bundle_defids":[150088,150089,150091,150090],"usable_duration":0,"bundle_discount":0},
+                       // Chat Effect
+                       {"appid":1675200,"defid":160000,"type":1,"community_item_class":16,"community_item_type":13,"point_cost":"5000","timestamp_created":1647055151,"timestamp_updated":1647056882,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Grape","active":true,"community_item_data":{"item_name":"Grape","item_title":"Grape","item_image_small":"4943f6a4483a3bb4b1147342c2a6a9b0b535efd8.png","item_image_large":"5dd1c85d418897b9a59995dfda68e4d74afc8731.png","animated":true,"profile_theme_id":"Grape"},"usable_duration":0,"bundle_discount":0},
+                       {"appid":1195690,"defid":75834,"type":1,"community_item_class":12,"community_item_type":70,"point_cost":"1500","timestamp_created":1577115502,"timestamp_updated":1612915098,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"balloons","active":true,"community_item_data":{"item_name":"Balloons","item_title":"Balloons","item_description":"Release a cascade of balloons in chat. Ring in the new year the inflatable way!","item_image_small":"e0086370cd28c29e0fff147942c2429259e3aa8a.png","item_image_large":"e0086370cd28c29e0fff147942c2429259e3aa8a.png","animated":false},"usable_duration":0,"bundle_discount":0},
                        // Invalid item - in this case, a limited edition badge that can no longer be found or purchased on the Points Shop.
                        // Item class has been deliberately set to -1 (it is actually 1 in Steam API).
                        {"appid":1263950,"defid":78777,"type":2,"community_item_class":-1,"community_item_type":1,"point_cost":"1000","timestamp_created":1620665352,"timestamp_updated":1620665370,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"The Summer Debut Badge","active":true,"community_item_data":{"item_name":"","animated":false,"badge_data":[{"level":1,"image":"740f08be972c6daeabe437a956bc6237397ee485.png"},{"level":2,"image":"d779085f334e5b1d477a36e41809109c830ecf39.png"},{"level":3,"image":"a0b90e2a1122227ae6706dbbf6a16457d363ca46.png"},{"level":4,"image":"7daf2808f1724c409875762db006373ecf1514d9.png"},{"level":5,"image":"a82e46ad0179610f89fbd9b4422d64e93c755011.png"},{"level":6,"image":"2f40f4cd8c9e0407a28de04ca40d76719c1c1021.png"},{"level":7,"image":"dc2afec0695106d589714459a44eef5ddcb5639d.png"},{"level":8,"image":"2badfaea5c5a8f5e0f425ec5b7e141ebcf213201.png"},{"level":9,"image":"eadd5afbfb858f91cccf471559fbc2dd6144a0d2.png"},{"level":10,"image":"0786523036fea921bd6ecd3e9f9969b7a88f2511.png"},{"level":11,"image":"547ef7e2e5aa5556793a67e2d60f8c0edd5b8193.png"},{"level":12,"image":"3e7047f407a86f522ae23182bb2377b5844802c7.png"},{"level":13,"image":"18aa299e361a4dd9a3c62fa96d97ceb515bb1a1d.png"},{"level":14,"image":"b235c464a6ae54dac6ebd0f67facb4f12e8f9af7.png"},{"level":15,"image":"e3e7abfc307684f256234860b8c41d0930c770fa.png"},{"level":16,"image":"55896dc2c14deca8b84ec2914cc56498a8df9f8a.png"},{"level":17,"image":"5ae95ebe1f14c3ea3024ce34884cb1a6a3d53a12.png"},{"level":18,"image":"5cda1b981cbae93e1e2729176951521a01896b7a.png"},{"level":19,"image":"61617ce9b70193e23b463448b37c2746b7726eb1.png"},{"level":20,"image":"24a62a6fa825d6b0a174675fb97a01e9df81d030.png"}]},"usable_duration":0,"bundle_discount":0}
@@ -302,6 +307,32 @@ describe('Utils unit tests', () => {
                    ],
                    "name": "The Debut Collection",
                    "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1263950",
+               },
+               "1675200": {
+                   "name": "Steam Deck",
+                   "items": [
+                       {
+                           "name": "Grape",
+                           "itemType": "Steam Deck Keyboard",
+                           "cost": "5000",
+                           "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1675200/cluster/8",
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1675200/5dd1c85d418897b9a59995dfda68e4d74afc8731.png"
+                       }
+                   ],
+                   "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1675200"
+               },
+               "1195690": {
+                   "name": "Winter Sale Event 2019",
+                   "items": [
+                       {
+                           "name": "Balloons",
+                           "itemType": "Chat Effect",
+                           "cost": "1500",
+                           "pointsShopUrl": "https://store.steampowered.com/points/shop/c/chateffects",
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1195690/e0086370cd28c29e0fff147942c2429259e3aa8a.png"
+                       }
+                   ],
+                   "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1195690"
                },
            };
 
