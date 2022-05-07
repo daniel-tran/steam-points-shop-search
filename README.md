@@ -39,9 +39,13 @@ This can be due to, but not strictly limited to:
 
 For some unknown reason, the Steam API data sets the cost of item bundles to 0, and it's generally easier to have the user find the item bundle's price on the specific app's Points Shop page rather than manually calculating the cost through data aggregation.
 
-## What will happen once Steam introduces an official search function for the Points Shop?
+## Steam does has an official search function for the Points Shop. Why would I want to use this search tool?
 
-If that ever happens, then this repository will mostly likely be archived and cease being hosted via GitHub Pages.
+The in-built Points Shop search function provided by Valve might be all you need but it is particularly limiting, given that it will only search based on games that you currently own. Also, you need to be logged into Steam in order to use the in-built search function.
+
+This tool aims to provide a more robust searching capability, particularly around finding individual items, with some basic sorting criteria.
+
+If the in-built search mechanism for the Points Shop is improved such that it matches or supercedes what this tool has to offer, then this repository will mostly likely be archived and cease being hosted via GitHub Pages.
 
 # Disclaimer
 
