@@ -12,6 +12,10 @@ You can also read the technical notes about how this search functionality has be
 1. Node 16.13.2 or higher
 2. Npm 8.1.2 or higher (should already be included with the standard Node installer)
 
+## View pre-generated data
+
+Simply load "index.html" into your browser and start using previously generated search data, located in "docs/data.js".
+
 ## Generating search data
 
 After cloning or downloading a copy of this repository:
@@ -41,11 +45,13 @@ For some unknown reason, the Steam API data sets the cost of item bundles to 0, 
 
 ## Steam does has an official search function for the Points Shop. Why would I want to use this search tool?
 
-The in-built Points Shop search function provided by Valve might be all you need but it is particularly limiting, given that it will only search based on games that you currently own. Also, you need to be logged into Steam in order to use the in-built search function.
+The in-built Points Shop search function provided by Valve might be all you need but it is particularly limiting, ~~given that it will only search based on games that you currently own~~. Also, you need to be logged into Steam in order to use the in-built search function.
 
 This tool aims to provide a more robust searching capability, particularly around finding individual items, with some basic sorting criteria.
 
 If the in-built search mechanism for the Points Shop is improved such that it matches or supercedes what this tool has to offer, then this repository will mostly likely be archived and cease being hosted via GitHub Pages.
+
+**7/12/2022 UPDATE**: Valve have refined the Points Shop searching mechanism such that it's now an *actual search bar* to find items of a particular type (e.g. backgrounds, avatars, etc.). It still has its odd quirks, such a search text containing a full stop sometimes returning items that neither have a dot in their names nor the games that they come from, but overall mostly usable.
 
 # Disclaimer
 
