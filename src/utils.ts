@@ -116,6 +116,7 @@ function getCommunityItemType(itemClass: number) {
         case 8: return 'Special Profile';
         case 16: return 'Steam Deck Keyboard';
         case 12: return 'Chat Effect';
+        case 17: return 'Steam Startup Movie';
     }
     return '';
 }
@@ -136,6 +137,7 @@ function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
         case 8: return `${clusterUrl}1`;
         case 16: return `${clusterUrl}8`;
         case 12: return 'https://store.steampowered.com/points/shop/c/chateffects'; // Chat effects are currently bundled all on the same page
+        case 17: return `${clusterUrl}9`;
     }
     return clusterUrl;
 }
@@ -149,6 +151,7 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
         case 8:
         case 16:
         case 12:
+        case 17:
         case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
         case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
         case 0: return ''; // Item bundles reuse an existing image, which is not provided through the Steam API
