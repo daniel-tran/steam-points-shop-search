@@ -7,9 +7,8 @@ describe('Utils unit tests', () => {
     describe('Configuration construction', () => {
         test('should generate normal config', () => {
            const responseData = `
-           <select>
-             <option value='1435780'>Farm Frenzy Refreshed</option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed</span>
+           <a href="/index.php?gamepage-appid-1435780" class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
            const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2);
            const configItem = config.app['1435780'];
@@ -21,9 +20,8 @@ describe('Utils unit tests', () => {
 
         test('should handle empty app', () => {
            const responseData = `
-           <select>
-             <option value=''></option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic"></span>
+           <a href="/index.php?gamepage-appid-" class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
            const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2);
            expect(config.app).toEqual({});
@@ -32,11 +30,12 @@ describe('Utils unit tests', () => {
 
         test("should disperse apps into multiple URL's", () => {
            const responseData = `
-           <select>
-             <option value='1435780'>Farm Frenzy Refreshed</option>
-             <option value='440'>Team Fortress 2</option>
-             <option value='92800'>SpaceChem</option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed</span>
+           <a href="/index.php?gamepage-appid-1435780" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Team Fortress 2</span>
+           <a href="/index.php?gamepage-appid-440" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">SpaceChem</span>
+           <a href="/index.php?gamepage-appid-92800" class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
            const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2);
            expect(config.app['1435780']).toBeDefined();
@@ -48,21 +47,20 @@ describe('Utils unit tests', () => {
 
         test('should remove extra text in app ID if required', () => {
            const responseData = `
-           <select>
-             <option value='app-1435780'>Farm Frenzy Refreshed</option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed</span>
+           <a href="/index.php?gamepage-appid-extra-text-1435780" class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
-           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, /\d+/);
+           const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2);
            const configItem = config.app['1435780'];
            expect(configItem).toBeDefined();
         });
 
         test('should remove duplicate app ID', () => {
            const responseData = `
-           <select>
-             <option value='app-1435780'>Farm Frenzy Refreshed</option>
-             <option value='app-1435780#goty'>Farm Frenzy Refreshed - Game of the Year Edition</option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed</span>
+           <a href="/index.php?gamepage-appid-1435780" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed - Game of the Year Edition</span>
+           <a href="/index.php?gamepage-appid-1435780#goty" class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
            const config = getConfigData(responseData, 'https://api.steampowered.com?count=100', 2, /\d+/);
            const configItem = config.app['1435780'];
@@ -192,15 +190,20 @@ describe('Utils unit tests', () => {
     describe('Mocked end-to-end test', () => {
         test('should feed valid config into processing function', () => {
            const responseData = `
-           <select>
-             <option value='1435780'>Farm Frenzy Refreshed</option>
-             <option value='440'>Team Fortress 2</option>
-             <option value='1263950'>The Debut Collection</option>
-             <option value='1846860'>Winter Sale 2021</option>
-             <option value='1675200'>Steam Deck</option>
-             <option value='1195690'>Winter Sale Event 2019</option>
-             <option value='756'>Steam Big Picture</option>
-           </select>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Farm Frenzy Refreshed</span>
+           <a href="/index.php?gamepage-appid-1435780" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Team Fortress 2</span>
+           <a href="/index.php?gamepage-appid-440"     class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">The Debut Collection</span>
+           <a href="/index.php?gamepage-appid-1263950" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Winter Sale 2021</span>
+           <a href="/index.php?gamepage-appid-1846860" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Steam Deck</span>
+           <a href="/index.php?gamepage-appid-1675200" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Winter Sale Event 2019</span>
+           <a href="/index.php?gamepage-appid-1195690" class="p-2 btn-primary lg:w-min">Showcase</a>
+           <span class="mr-2 tracking-wider truncate font-league-gothic">Steam Big Picture</span>
+           <a href="/index.php?gamepage-appid-756"     class="p-2 btn-primary lg:w-min">Showcase</a>
            `;
            // Just take a real data sample from the Steam API and add it to the mocked response
            axios.get = jest.fn().mockResolvedValue({
