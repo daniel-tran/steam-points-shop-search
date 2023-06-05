@@ -61,6 +61,7 @@ describe('Frontend tests', () => {
        expect(getByText(container, 'Search')).toBeInTheDocument();
        expect(container.querySelector('#searchMode')).not.toBeNull();
        expect(container.querySelector('#sortMode')).not.toBeNull();
+       expect(container.querySelector('#orderMode')).not.toBeNull();
     });
 
     describe('Valid search text', () => {
@@ -187,6 +188,30 @@ describe('Frontend tests', () => {
             expect(rows.length).toBe(3);
             expect(rows[1].cells[0]).toHaveTextContent('Farm Frenzy Refreshed');
             expect(rows[2].cells[0]).toHaveTextContent('Team Fortress 2');
+        });
+    });
+
+    describe('Sort options', () => {
+        function setOrderMode(orderMode: string) {
+            container.querySelector('#orderMode').value = orderMode;
+        }
+
+        test('should order results in ASC mode', () => {
+            setOrderMode('ascending');
+            search('ck');
+            const rows = container.querySelectorAll('tr');
+            expect(rows.length).toBe(3);
+            expect(rows[1].cells[2].innerText).toEqual(':sticky:');
+            expect(rows[2].cells[2].innerText).toEqual('Ducky Quack');
+        });
+
+        test('should order results in DESC mode', () => {
+            setOrderMode('descending');
+            search('ck');
+            const rows = container.querySelectorAll('tr');
+            expect(rows.length).toBe(3);
+            expect(rows[1].cells[2].innerText).toEqual('Ducky Quack');
+            expect(rows[2].cells[2].innerText).toEqual(':sticky:');
         });
     });
 });
