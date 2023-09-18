@@ -86,7 +86,7 @@
                         case 1: cell.innerHTML = `<a href="${results[r].imageUrl.length > 0 ? results[r].imageUrl : results[r].pointsShopUrlApp}" target="_blank">View "${results[r].itemName}"</a>`; break;
                         case 2: cell.innerText = results[r].itemName; break;
                         case 3: cell.innerText = results[r].itemType; break;
-                        case 4: cell.innerText = results[r].itemCost > 0 ? results[r].itemCost : "???"; break;
+                        case 4: cell.innerText = getItemCost(results[r]); break;
                         case 5: cell.innerHTML = `<a href="${results[r].pointsShopUrlCluster}" target="_blank">${results[r].pointsShopUrlCluster}</a>`; break;
                         default: cell.innerText = "";
                     }
@@ -101,6 +101,14 @@
             if (window.event.key == "Enter") {
                 searchForItem(document.getElementById("searchInput").value);
             }
+        }
+
+        function getItemCost(itemObject) {
+            // Some items are actually free on the Points Shop, so don't confuse them for items whose prices are actually unknown
+            if (itemObject.itemCost > 0 || itemObject.appName === "Steam 20th Anniversary") {
+                return itemObject.itemCost;
+            }
+            return "???"
         }
     </script>
 </head>
