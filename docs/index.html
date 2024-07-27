@@ -106,6 +106,7 @@
         function getItemCost(itemObject) {
             // Some items are actually free on the Points Shop, so don't confuse them for items whose prices are actually unknown
             const appsWithOnlyFreeItems = [
+                "PAX East 2024",
                 "Steam 20th Anniversary",
             ];
             if (itemObject.itemCost > 0 || appsWithOnlyFreeItems.includes(itemObject.appName)) {
