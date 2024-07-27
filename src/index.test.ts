@@ -28,7 +28,7 @@ describe('Frontend tests', () => {
                 items: [
                     {
                         cost: '1000',
-                        imageUrl: 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/e92b1d8a09cb52fbab6d51db5bea8ec3b8d5c251.png',
+                        imageUrl: 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/16ec12fb558bbab583f664547894281bda9d0958.png',
                         itemType: 'Animated Sticker',
                         name: 'Ducky Quack',
                         pointsShopUrl: 'https://store.steampowered.com/points/shop/app/1435780/cluster/6'

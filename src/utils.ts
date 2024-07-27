@@ -98,7 +98,7 @@ export function processConfigData(axiosInstance: any, config: any) {
                         'itemType': getCommunityItemType(item.community_item_class),
                         'cost': item.point_cost,
                         'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
-                        'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
+                        'imageUrl': getImageUrl(`${item.appid}`, getImageName(item.community_item_data, item.community_item_class), item.community_item_class),
                     });
                 });
             }
@@ -146,6 +146,23 @@ function getPointShopClusterUrl(pointsShopUrl: string, itemClass: number) {
     return clusterUrl;
 }
 
+function getImageName(itemData: any, itemClass: number) {
+    // The "animated" property is not completely reliable here, as it is set to false for Steam Startup Movies but they still have an
+    // associated .webm file. Also, items will provide different animated formats depending on the item type
+    // (e.g. Steam Startup Movies only have the .webm format, but Mini-Profile Backgrounds have .mp4 and .webm formats).
+    if (itemData.item_movie_mp4) {
+        return itemData.item_movie_mp4;
+    } else if (itemData.item_movie_webm) {
+        return itemData.item_movie_webm;
+    } else if (itemData.animated && itemData.item_image_small && itemClass !== 16) {
+        // Items can have an extension that isn't .gif and still be animated.
+        // For Steam Deck Keyboards, the "animated" property is enabled but none of the images are actually
+        // animated - in which case, the large image is more preferable in terms of visualisation.
+        return itemData.item_image_small;
+    }
+    return itemData.item_image_large;
+}
+
 function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: number) {
     switch(itemClass) {
         case 15:
@@ -156,8 +173,8 @@ function getImageUrl(appId: string, imageNameWithExtension: string, itemClass: n
         case 16:
         case 12:
         case 17:
-        case 4: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
-        case 3: return `https://steamcommunity.com/economy/profilebackground/items/${appId}/${imageNameWithExtension}`;
+        case 4:
+        case 3: return `https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/${appId}/${imageNameWithExtension}`;
         case 0: return ''; // Item bundles reuse an existing image, which is not provided through the Steam API
     }
     return '';
@@ -229,7 +246,7 @@ export function processConfigDataRecursive(axiosInstance: any, itemMapping: any,
                               'itemType': getCommunityItemType(item.community_item_class),
                               'cost': item.point_cost,
                               'pointsShopUrl': getPointShopClusterUrl(itemMapping[`${item.appid}`]['pointsShopUrl'], item.community_item_class),
-                              'imageUrl': getImageUrl(`${item.appid}`, item.community_item_data.item_image_large, item.community_item_class),
+                              'imageUrl': getImageUrl(`${item.appid}`, getImageName(item.community_item_data, item.community_item_class), item.community_item_class),
                           });
                       });
 

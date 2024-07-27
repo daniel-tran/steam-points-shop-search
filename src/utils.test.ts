@@ -107,7 +107,7 @@ describe('Utils unit tests', () => {
                 expect(app.items[0].itemType).toEqual('Animated Sticker');
                 expect(app.items[0].cost).toEqual('1000');
                 expect(app.items[0].pointsShopUrl).toEqual('https://store.steampowered.com/points/shop/app/1435780/cluster/6');
-                expect(app.items[0].imageUrl).toEqual('https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/f33d61a2ca4488fa7729c5a8c88421f8d0181288.png');
+                expect(app.items[0].imageUrl).toEqual('https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/e331c234f9c241118eff464a4a575da99625af91.png');
             });
         });
 
@@ -226,8 +226,9 @@ describe('Utils unit tests', () => {
                        {"appid":1263950,"defid":78781,"type":1,"community_item_class":15,"community_item_type":5,"point_cost":"3000","timestamp_created":1600898758,"timestamp_updated":1620665370,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Entering VR","active":true,"community_item_data":{"item_name":"Entering VR","item_title":"Entering VR","item_image_small":"4e0f9df2a984e2208844614afdfb59c8f903b7a6.gif","item_image_large":"31282c57ab27f4bc07aded27f1910f83287059c3.jpg","animated":true},"usable_duration":0,"bundle_discount":0},
                        // Special Profile
                        {"appid":1846860,"defid":150092,"type":1,"community_item_class":8,"community_item_type":13,"point_cost":"5000","timestamp_created":1641234579,"timestamp_updated":1641419301,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Winter 2021","active":true,"community_item_data":{"item_name":"Winter 2021","item_title":"Winter 2021","item_image_small":"ff46ca81f6c9fcb8165bfb2b161bbe364a8d14df.jpg","item_image_large":"32161169b3224ac783dec362027afeff7b7607c2.jpg","animated":false,"profile_theme_id":"Winter2021"},"bundle_defids":[150088,150089,150091,150090],"usable_duration":0,"bundle_discount":0},
-                       // Chat Effect
+                       // Steam Deck Keyboard
                        {"appid":1675200,"defid":160000,"type":1,"community_item_class":16,"community_item_type":13,"point_cost":"5000","timestamp_created":1647055151,"timestamp_updated":1647056882,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"Grape","active":true,"community_item_data":{"item_name":"Grape","item_title":"Grape","item_image_small":"4943f6a4483a3bb4b1147342c2a6a9b0b535efd8.png","item_image_large":"5dd1c85d418897b9a59995dfda68e4d74afc8731.png","animated":true,"profile_theme_id":"Grape"},"usable_duration":0,"bundle_discount":0},
+                       // Chat Effect
                        {"appid":1195690,"defid":75834,"type":1,"community_item_class":12,"community_item_type":70,"point_cost":"1500","timestamp_created":1577115502,"timestamp_updated":1612915098,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"balloons","active":true,"community_item_data":{"item_name":"Balloons","item_title":"Balloons","item_description":"Release a cascade of balloons in chat. Ring in the new year the inflatable way!","item_image_small":"e0086370cd28c29e0fff147942c2429259e3aa8a.png","item_image_large":"e0086370cd28c29e0fff147942c2429259e3aa8a.png","animated":false},"usable_duration":0,"bundle_discount":0},
                        // Steam Startup Movie
                        {"appid":756,"defid":195306,"type":1,"community_item_class":17,"community_item_type":1,"point_cost":"3000","timestamp_created":1678998474,"timestamp_updated":1678998489,"timestamp_available":0,"timestamp_available_end":0,"quantity":"1","internal_description":"OG Big Picture","active":true,"community_item_data":{"item_name":"OG Big Picture","item_title":"OG Big Picture","item_image_small":"ea4e6a32249db4d57ef4ee393f9ca29210d1479c.png","item_image_large":"ea4e6a32249db4d57ef4ee393f9ca29210d1479c.png","item_movie_webm":"bade616401392739e67eb00ff2b43750da0316ec.webm","item_movie_webm_small":"5ccce40a3d09c713a62d0a14d97da577c4ee2bd1.webm","animated":false},"usable_duration":0,"bundle_discount":0},
@@ -262,7 +263,7 @@ describe('Utils unit tests', () => {
                            "itemType": "Animated Sticker",
                            "cost": "1000",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1435780/cluster/6",
-                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/f33d61a2ca4488fa7729c5a8c88421f8d0181288.png"
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/e331c234f9c241118eff464a4a575da99625af91.png"
                        },
                        {
                            "name": ":FFpizza:",
@@ -276,7 +277,7 @@ describe('Utils unit tests', () => {
                            "itemType": "Profile Background",
                            "cost": "500",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1435780/cluster/5",
-                           "imageUrl": "https://steamcommunity.com/economy/profilebackground/items/1435780/d621f08fcb9b35cb2bfb6a2e15afa3aff9a24607.jpg"
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/d621f08fcb9b35cb2bfb6a2e15afa3aff9a24607.jpg"
                        }
                    ],
                    "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1435780"
@@ -301,21 +302,21 @@ describe('Utils unit tests', () => {
                            "itemType": "Mini-Profile",
                            "cost": "2000",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1263950/cluster/4",
-                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/e9a0bc30602a6fa8f59fd220ef26857ccb3f381a.jpg"
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/b60767651d441a44fbcb1cc9d7236fcad31c36a8.mp4"
                        },
                        {
                            "name": "Neon",
                            "itemType": "Avatar Frame",
                            "cost": "2000",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1263950/cluster/3",
-                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/89dcb4ff7bcd5dfbfc40dd488910503f1afc9c6b.png"
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/175875a819256fdeb4a2f4bf1b124afba6c3e2e3.png"
                        },
                        {
                            "name": "Entering VR",
                            "itemType": "Animated Avatar",
                            "cost": "3000",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/1263950/cluster/2",
-                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/31282c57ab27f4bc07aded27f1910f83287059c3.jpg"
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1263950/4e0f9df2a984e2208844614afdfb59c8f903b7a6.gif"
                        },
                        {
                            "name": "",
@@ -359,7 +360,7 @@ describe('Utils unit tests', () => {
                    "items": [
                        {
                            "cost": "3000",
-                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/756/ea4e6a32249db4d57ef4ee393f9ca29210d1479c.png",
+                           "imageUrl": "https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/756/bade616401392739e67eb00ff2b43750da0316ec.webm",
                            "itemType": "Steam Startup Movie",
                            "name": "OG Big Picture",
                            "pointsShopUrl": "https://store.steampowered.com/points/shop/app/756/cluster/9",
@@ -459,7 +460,7 @@ describe('Utils (alternate implementation) unit tests', () => {
                                 'itemType': 'Animated Sticker',
                                 'cost': '1000',
                                 'pointsShopUrl': 'https://store.steampowered.com/points/shop/app/1435780/cluster/6',
-                                'imageUrl': 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/f33d61a2ca4488fa7729c5a8c88421f8d0181288.png'
+                                'imageUrl': 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/e331c234f9c241118eff464a4a575da99625af91.png'
                             }
                         ]
                     }
@@ -501,7 +502,7 @@ describe('Utils (alternate implementation) unit tests', () => {
                                 'itemType': 'Animated Sticker',
                                 'cost': '1000',
                                 'pointsShopUrl': 'https://store.steampowered.com/points/shop/app/1435780/cluster/6',
-                                'imageUrl': 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/f33d61a2ca4488fa7729c5a8c88421f8d0181288.png'
+                                'imageUrl': 'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/1435780/e331c234f9c241118eff464a4a575da99625af91.png'
                             }
                         ]
                     }
