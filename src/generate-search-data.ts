@@ -24,7 +24,7 @@ for (let i = 0; i < urlList.length; i++) {
       .then( // Once we have data returned ...
         response => {
             console.log(`Acquired raw page data from "${urlList[i]}", now extracting app ID data.`);
-            return getConfigData(response.data, 'https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=1000', 90, /\d+/);
+            return getConfigData(response.data, 'https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=1000', 80, /\d+/);
         }
       ).then(
         response => {
