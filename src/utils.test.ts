@@ -143,10 +143,14 @@ describe('Utils unit tests', () => {
 
         test('should handle empty response from Steam API', () => {
             axios.get = jest.fn().mockResolvedValue({
+                config: {
+                    url: 'datrandomurl?count=1000'
+                },
                 data: {
                     response: {
                         total_count: 1,
-                        count: 0
+                        count: 0,
+                        next_cursor: 'Que'
                     }
                 }
             });
@@ -168,10 +172,14 @@ describe('Utils unit tests', () => {
 
         test('should handle empty configuration', () => {
             axios.get = jest.fn().mockResolvedValue({
+                config: {
+                    url: 'datrandomurl?count=1000'
+                },
                 data: {
                     response: {
                         total_count: 1,
-                        count: 0
+                        count: 0,
+                        next_cursor: 'Que'
                     }
                 }
             });

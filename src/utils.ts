@@ -79,7 +79,8 @@ export function processConfigData(axiosInstance: any, config: any) {
             let endpointData = response.data.response;
 
             if (endpointData.total_count > endpointData.count) {
-                console.warn(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items.`);
+                console.warn(`WARNING! Pagination is required to access remaining data. Got ${endpointData.total_count} total items but only retrieved ${endpointData.count}.`);
+                console.warn(`You can manually check this URL for any remaining data:\n${response.config.url}&cursor=${endpointData.next_cursor}`)
             }
 
             if (endpointData.definitions) {
