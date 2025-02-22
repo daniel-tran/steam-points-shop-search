@@ -109,7 +109,13 @@
                 "PAX East 2024",
                 "Steam 20th Anniversary",
             ];
-            if (itemObject.itemCost > 0 || appsWithOnlyFreeItems.includes(itemObject.appName)) {
+            const appsWithSomeFreeItems = {
+                "Lunar New Year 2025": [
+                    "Snake in a Blanket",
+                    ":lunar2025snakeinablanket:",
+                ],
+            };
+            if (itemObject.itemCost > 0 || appsWithOnlyFreeItems.includes(itemObject.appName) || appsWithSomeFreeItems[itemObject.appName]?.includes(itemObject.itemName)) {
                 return itemObject.itemCost;
             }
             return "???"
