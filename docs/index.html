@@ -106,11 +106,12 @@
         function getItemCost(itemObject) {
             // Some items are actually free on the Points Shop, so don't confuse them for items whose prices are actually unknown
             const appsWithOnlyFreeItems = [
-                "Idler Fest",
-                "PAX East 2024",
                 "Steam 20th Anniversary",
             ];
             const appsWithSomeFreeItems = {
+                "Idler Fest": [
+                    "Auto Collect"
+                ],
                 "Lunar New Year 2025": [
                     "Snake in a Blanket",
                     ":lunar2025snakeinablanket:",
