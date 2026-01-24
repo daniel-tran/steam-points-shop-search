@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { writeFile } from 'fs';
-import { processConfigDataRecursive, getConfigDataFromAppList } from './utils';
+import { processConfigDataRecursive, getConfigDataFromAppList, API_RESPONSE_COUNT } from './utils';
 
 const AxiosInstance = axios.create();
 const jsonIndentation = '    ';
@@ -18,7 +18,7 @@ AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')
                 console.warn(err);
             }
         });
-        return processConfigDataRecursive(AxiosInstance, {}, response, 'https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=1000', '')
+        return processConfigDataRecursive(AxiosInstance, {}, response, `https://api.steampowered.com/ILoyaltyRewardsService/QueryRewardItems/v1/?count=${API_RESPONSE_COUNT}`, '')
     }
   ).then(
     response => {
