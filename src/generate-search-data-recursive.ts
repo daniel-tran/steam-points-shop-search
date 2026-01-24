@@ -3,7 +3,7 @@ import { writeFile } from 'fs';
 import { processConfigDataRecursive, getConfigDataFromAppList, API_RESPONSE_COUNT } from './utils';
 
 const AxiosInstance = axios.create();
-const jsonIndentation = '    ';
+const jsonIndentation = '  ';
 
 // See the technical notes for why this endpoint is still problematic for obtaining the app list
 AxiosInstance.get('https://api.steampowered.com/ISteamApps/GetAppList/v2/?')

@@ -3,7 +3,7 @@ import { writeFile, appendFile } from 'fs';
 import { getConfigData, processConfigData, API_RESPONSE_COUNT } from './utils';
 
 const AxiosInstance = axios.create();
-const jsonIndentation = '    ';
+const jsonIndentation = '  ';
 
 // Send an async HTTP Get request to each url
 const urlList = [
