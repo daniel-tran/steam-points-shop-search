@@ -214,4 +214,14 @@ describe('Frontend tests', () => {
             expect(rows[2].cells[2].innerText).toEqual(':sticky:');
         });
     });
+
+    describe('Theme button', () => {
+        test('should switch from light to dark theme and back again', () => {
+            fireEvent.click(container.querySelector('#themeButton'));
+            expect(container.parentElement.className).toEqual('theme-dark');
+
+            fireEvent.click(container.querySelector('#themeButton'));
+            expect(container.parentElement.className).not.toEqual('theme-dark');
+        });
+    });
 });

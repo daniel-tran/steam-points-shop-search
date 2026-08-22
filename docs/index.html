@@ -22,7 +22,8 @@
             display: none;
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <!-- See https://cdnjs.com/libraries/bulma -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/1.0.4/css/bulma.min.css" integrity="sha512-yh2RE0wZCVZeysGiqTwDTO/dKelCbS9bP2L94UvOFtl/FKXcNAje3Y2oBg/ZMZ3LS1sicYk4dYVGtDex75fvvA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script>
         function getSearchResults(searchText, searchMode, sortByProperty, orderMode) {
             let result = [];
@@ -122,17 +123,28 @@
             }
             return "???"
         }
+
+        function changeTheme() {
+            if (document.getElementsByTagName("html")[0].classList.contains("theme-dark")) {
+                document.getElementsByTagName("html")[0].className = "";
+                document.getElementById("themeButton").innerText = "☀️";
+            } else {
+                document.getElementsByTagName("html")[0].className = "theme-dark";
+                document.getElementById("themeButton").innerText = "🌙";
+            }
+        }
     </script>
 </head>
 <body>
     <div class="columns">
         <div class="column is-half is-offset-one-quarter">
             <div class="columns mt-2">
-                <div class="column is-four-fifths">
+                <div class="column is-three-fifths">
                     <input type="text" id="searchInput" class="input is-rounded" placeholder="Enter search text, then press the Search button" maxlength="255" onkeyup="searchForItemUsingEnterKey()"/>
                 </div>
-                <div class="column is-one-fifth">
+                <div class="column is-two-fifths is-grouped">
                     <button type="button" onclick="searchForItem(document.getElementById('searchInput').value)" class="button is-primary is-rounded">Search</button>
+                    <button type="button" id="themeButton" onclick="changeTheme()" class="button is-link is-rounded">☀️</button>
                 </div>
             </div>
             <p id="searchValidationError" class="field help is-danger">Search text cannot be empty and must contain at least two non-whitespace characters. Search text cannot exceed 255 characters.</p>
